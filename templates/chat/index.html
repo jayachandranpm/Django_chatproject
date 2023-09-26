@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <!--Import jQuery before materialize.js-->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="{% static 'js/materialize.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/chat.js' %}"></script>
+</head>
+
+<body>
+{% block body %}
+<div class="section blue lighten-1">
+    <div class="container white-text center-align text">
+        <h2>Chatting Application</h2>
+    </div>
+</div>
+<div class="container">
+    <div class="row">
+        <div class="col s12 m8 l6 offset-m2 offset-l3">
+            <div class="section center-block">
+                <div>
+                    {% block form %}
+                    <h3>Login</h3>
+                    <form id="login-form" class="form-group" method="post">
+                        {% csrf_token %}
+                        <div class="input-field">
+                            <input name="username" id="id_username" type="text" placeholder="Username">
+                        </div>
+                        <div class="input-field">
+                            <input name="password" id="id_password" type="password" placeholder="Password">
+                        </div>
+                        <div class="row">
+                            <div class="col s8">
+                                <a href="{% url 'register' %}" style="color: #2196F3;">Register</a>
+                            </div>
+                            <div class="col s4">
+                                <div class="right">
+                                    <button class="btn blue waves-effect waves-light">Login</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form id="recommend-form" class="form-group" method="get" action="{% url 'api_suggested_friends' user_id=0 %}">
+                        <div class="input-field">
+                            <input name="user_id" id="id_user_id" type="number" placeholder="Enter User ID">
+                        </div>
+                        <button id="recommend-button" class="btn blue waves-effect waves-light">Recommend Friends</button>
+                    </form>
+                    
+                    <script>
+                        // Add an event listener to the "Recommend Friends" button
+                        document.getElementById('recommend-button').addEventListener('click', function () {
+                            // Get the user ID entered by the user
+                            var userIdInput = document.getElementById('id_user_id');
+                            var userId = userIdInput.value;
+                    
+                            // Construct the URL with the user ID
+                            var actionUrl = "{% url 'api_suggested_friends' user_id=0 %}".replace("0", userId);
+                    
+                            // Set the updated action URL for the form
+                            document.getElementById('recommend-form').action = actionUrl;
+                        });
+                    </script>
+                    
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+</body>
+</html>

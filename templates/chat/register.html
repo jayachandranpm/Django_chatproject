@@ -1,0 +1,23 @@
+{% extends 'chat/index.html' %}
+{% block form %}
+    <h3 class="text-center">Register</h3>
+    <form id="register-form" class="form-group" method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+        </div>
+        <div class="form-group">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+        </div>
+        <div class="form-group">
+            <button class="btn blue waves-effect waves-light pull-right">Register</button>
+
+        </div>
+    </form>
+{% endblock %}

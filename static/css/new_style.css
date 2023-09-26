@@ -1,0 +1,130 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Apply a background color to the body */
+body {
+    background-color: #f0f0f0;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Style the header/navbar */
+header {
+    background-color: #1565c0;
+    color: white;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+}
+
+.brand-logo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-decoration: none;
+    color: white;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: white;
+    margin-right: 1rem;
+}
+
+/* Style the main content container */
+.main-content {
+    padding: 2rem;
+}
+
+.container {
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Style the user list */
+.user-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #ddd;
+    text-decoration: none;
+    color: #333;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 1rem;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+/* Style the chat panel */
+.chat-panel {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+.message-list {
+    background-color: #f5f5f5;
+    padding: 1rem;
+    border-radius: 5px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+/* Style the message input form */
+.message-form {
+    display: flex;
+    align-items: center;
+    padding-top: 1rem;
+}
+
+.message-input {
+    flex: 1;
+    margin-right: 1rem;
+}
+
+#id_message {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #1565c0;
+    border-radius: 5px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn-send {
+    background-color: #1565c0;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-send:hover {
+    background-color: #0d47a1;
+}
