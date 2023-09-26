@@ -57,7 +57,7 @@ def register_view(request):
     Render registration template
     """
     if request.method == 'POST':
-        print("working1")
+        
         form = SignUpForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
