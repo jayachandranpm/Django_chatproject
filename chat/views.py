@@ -51,9 +51,7 @@ def message_list(request, sender=None, receiver=None):
 
 
 def register_view(request):
-    """
-    Render registration template
-    """
+
     if request.method == 'POST':
         
         form = SignUpForm(request.POST)
@@ -102,7 +100,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from django.templatetags.static import static
 
-# Construct the URL for the JSON file using the static() function
+# Construct the path for the JSON file 
 json_file_path = 'C:\\AI PROJECTS\\chatting-app-django\\static\\json\\users.json'
 
 
