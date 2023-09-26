@@ -32,9 +32,7 @@ def index(request):
 
 @csrf_exempt
 def message_list(request, sender=None, receiver=None):
-    """
-    List all required messages, or create a new message.
-    """
+
     if request.method == 'GET':
         messages = Message.objects.filter(sender_id=sender, receiver_id=receiver, is_read=False)
         serializer = MessageSerializer(messages, many=True, context={'request': request})
