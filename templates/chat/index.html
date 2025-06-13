@@ -6,7 +6,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!--Import materialize.css-->
     <link type="text/css" rel="stylesheet" href="{% static 'css/materialize.min.css' %}" media="screen,projection"/>
-    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}" media="screen,projection"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/new_style.css' %}" media="screen,projection"/>
 
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -28,52 +28,32 @@
     <div class="row">
         <div class="col s12 m8 l6 offset-m2 offset-l3">
             <div class="section center-block">
-                <div>
-                    {% block form %}
-                    <h3>Login</h3>
-                    <form id="login-form" class="form-group" method="post">
-                        {% csrf_token %}
-                        <div class="input-field">
-                            <input name="username" id="id_username" type="text" placeholder="Username">
-                        </div>
-                        <div class="input-field">
-                            <input name="password" id="id_password" type="password" placeholder="Password">
-                        </div>
-                        <div class="row">
-                            <div class="col s8">
-                                <a href="{% url 'register' %}" style="color: #2196F3;">Register</a>
+                {% block form %}
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title">Login</span>
+                        <form id="login-form" method="post">
+                            {% csrf_token %}
+                            <div class="input-field">
+                                <input name="username" id="id_username" type="text" placeholder="Username">
+                                <label for="id_username">Username</label>
                             </div>
-                            <div class="col s4">
-                                <div class="right">
-                                    <button class="btn blue waves-effect waves-light">Login</button>
+                            <div class="input-field">
+                                <input name="password" id="id_password" type="password" placeholder="Password">
+                                <label for="id_password">Password</label>
+                            </div>
+                            <div class="row" style="margin-top: 20px;">
+                                <div class="col s6">
+                                    <a href="{% url 'register' %}" class="btn-flat waves-effect waves-light blue-text text-darken-2">Register</a>
+                                </div>
+                                <div class="col s6">
+                                    <button class="btn blue waves-effect waves-light right">Login</button>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <form id="recommend-form" class="form-group" method="get" action="{% url 'api_suggested_friends' user_id=0 %}">
-                        <div class="input-field">
-                            <input name="user_id" id="id_user_id" type="number" placeholder="Enter User ID">
-                        </div>
-                        <button id="recommend-button" class="btn blue waves-effect waves-light">Recommend Friends</button>
-                    </form>
-                    
-                    <script>
-                        // Add an event listener to the "Recommend Friends" button
-                        document.getElementById('recommend-button').addEventListener('click', function () {
-                            // Get the user ID entered by the user
-                            var userIdInput = document.getElementById('id_user_id');
-                            var userId = userIdInput.value;
-                    
-                            // Construct the URL with the user ID
-                            var actionUrl = "{% url 'api_suggested_friends' user_id=0 %}".replace("0", userId);
-                    
-                            // Set the updated action URL for the form
-                            document.getElementById('recommend-form').action = actionUrl;
-                        });
-                    </script>
-                    
-                    {% endblock %}
+                        </form>
+                    </div>
                 </div>
+                {% endblock %}
             </div>
         </div>
     </div>

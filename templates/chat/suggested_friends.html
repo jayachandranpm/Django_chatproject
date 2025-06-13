@@ -1,0 +1,53 @@
+{% extends 'chat/index.html' %}
+{% load static %}
+
+{% block body %}
+<nav class="blue lighten-1">
+    <div class="nav-wrapper container">
+        <a href="{% url 'chats' %}" class="brand-logo">Chat Application</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li><a href="{% url 'suggested_friends' %}" class="nav-link active">Suggested Friends</a></li>
+            <li><a href="#" class="nav-link">{{ request.user.username }}</a></li>
+            <li><a href="{% url 'logout' %}" class="btn-floating waves-effect waves-light red" title="Logout"><i class="material-icons">power_settings_new</i></a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container main-content">
+    <div class="row">
+        <div class="col s12">
+            <h3 class="center-align">Suggested Friends</h3>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                            <div class="card-panel red lighten-2 white-text center-align">{{ message }}</div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+
+            {% if suggested_friends %}
+                <div class="collection">
+                    {% for friend in suggested_friends %}
+                        <a href="#!" class="collection-item user-item">
+                            <img src="{% static 'images/user.png' %}" alt="{{ friend.name }}" class="user-avatar">
+                            <span class="title user-name">{{ friend.name }}</span>
+                            <!-- Add more details if available and desired -->
+                            <!-- <p>Age: {{ friend.age }}</p> -->
+                            <!-- <p>Interests: {{ friend.interests.keys|join:", " }}</p> -->
+                            <!-- Add a button to start chat if functionality exists -->
+                            <!-- <a href="{% url 'chat_with_user_by_name' friend.name %}" class="secondary-content btn blue waves-effect waves-light">Chat</a> -->
+                        </a>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p class="center-align">No friend suggestions available at the moment, or your profile data is not found.</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row center-align" style="margin-top: 20px;">
+        <a href="{% url 'chats' %}" class="btn waves-effect waves-light blue lighten-1">Back to Chats</a>
+    </div>
+</div>
+{% endblock %}

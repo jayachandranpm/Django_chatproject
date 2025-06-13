@@ -128,3 +128,45 @@ header {
 .btn-send:hover {
     background-color: #0d47a1;
 }
+
+/* Style for message sender information */
+.message-sender {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    font-weight: bolder;
+}
+
+/* Styling for individual messages */
+.message {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+    max-width: 75%;
+    word-wrap: break-word;
+}
+
+.message-sent {
+    background-color: #1565c0; /* Blue background for sent messages */
+    color: white;
+    margin-left: auto; /* Align to the right */
+    text-align: right;
+}
+
+.message-received {
+    background-color: #e0e0e0; /* Grey background for received messages */
+    color: black;
+    margin-right: auto; /* Align to the left */
+    text-align: left;
+}
+
+.message-timestamp {
+    font-size: 0.75rem; /* Smaller font size */
+    color: #757575; /* Grey color */
+    margin-top: 0.25rem; /* A little space above the timestamp */
+}
+
+/* Adjust timestamp color for sent messages for better contrast */
+.message-sent .message-timestamp {
+    color: #e0e0e0; /* Lighter grey for dark background */
+}

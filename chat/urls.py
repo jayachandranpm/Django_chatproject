@@ -12,7 +12,7 @@ urlpatterns = [
     path('api/messages/', views.message_list, name='message-list'),
     path('logout/', LogoutView.as_view(next_page='index'), name='logout'),
     path('register/', views.register_view, name='register'),
-    path('api/suggested-friends/<int:user_id>/', views.api_suggested_friends, name='api_suggested_friends'),
+    path('suggested-friends/', views.suggested_friends_view, name='suggested_friends'),
 ]
 
 

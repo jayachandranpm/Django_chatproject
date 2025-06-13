@@ -3,24 +3,25 @@
 {% block body %}
 <nav class="blue lighten-1">
     <div class="nav-wrapper container">
-      <a href="#" class="brand-logo" style="font-family: 'Montserrat', sans-serif; font-weight: bold; color: rgb(16, 87, 180);">Chat Application</a>
+      <a href="{% url 'chats' %}" class="brand-logo">Chat Application</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-          <li><a href="" style="font-family: 'Roboto', sans-serif; color: rgb(16, 99, 222);">{{ request.user.username }}</a></li>
-          <li><a href="{% url 'logout' %}" class="btn-floating waves-effect waves-light red"><i class="material-icons">power_settings_new</i></a></li>
+          <li><a href="{% url 'suggested_friends' %}" class="nav-link">Suggested Friends</a></li>
+          <li><a href="#" class="nav-link">{{ request.user.username }}</a></li>
+          <li><a href="{% url 'logout' %}" class="btn-floating waves-effect waves-light red" title="Logout"><i class="material-icons">power_settings_new</i></a></li>
       </ul>
     </div>
 </nav>
-<div class="section" style="height: 80vh">
+<div class="section">
     <div class="row">
         <div class="col s3">
         <div class="card">
-            <div class="collection">
+            <div class="collection user-list">
                 {% for user in users %}
-                <a href="{% url 'chat' request.user.id user.id %}" id="user{{ user.id }}" class="collection-item row">
-                    <img src="{% static 'images/user.png' %}" class="col s4">
+                <a href="{% url 'chat' request.user.id user.id %}" id="user{{ user.id }}" class="collection-item row user-item">
+                    <img src="{% static 'images/user.png' %}" class="col s4 user-avatar">
 
                     <div class="col s8">
-                    <span class="title" style="font-family: 'Montserrat', sans-serif; font-weight: bold; color: #1565c0;">{{ user.username }}</span>
+                    <span class="title user-name">{{ user.username }}</span>
                     </div>
                 </a>
                 {% endfor %}
@@ -29,21 +30,21 @@
         </div>
         <div class="col s9">
             <div class="card">
-            <div id="board" class="section blue lighten-5" style="height: 68vh; padding: 5px; overflow-y: scroll">
+            <div id="board" class="section blue lighten-5 message-list" style="overflow-y: scroll">
                 {% block messages %}
 
                 {% endblock %}
             </div>
-            <form id="chat-box" class="form-group {% block hide %}hide{% endblock %}" method="post">
+            <form id="chat-box" class="message-form {% block hide %}hide{% endblock %}" method="post">
                 {% csrf_token %}
                 <div class="row">
                     <div class="col s11">
                         <div class="input-field">
-                            <input id="id_message" name="message" type="text" placeholder="Type your message.." style="border: 2px solid #1565c0; font-family: 'Roboto', sans-serif;">
+                            <input id="id_message" name="message" type="text" placeholder="Type your message.." class="message-input">
                         </div>
                     </div>
                     <div class="col s1" style="line-height: 80px">
-                        <button class="btn btn-floating blue lighten-2 waves-effect waves-light"><i class="material-icons">send</i></button>
+                        <button class="btn btn-floating blue lighten-2 waves-effect waves-light btn-send"><i class="material-icons">send</i></button>
                     </div>
                 </div>
             </form>
@@ -55,18 +56,27 @@
 <script src="{% static 'js/chat.js' %}"></script>
 <script>
     // For receiving
-    sender_id = "{{ receiver.id }}";
-    receiver_id = "{{ request.user.id }}";
+    var chat_sender_id = "{{ receiver.id }}"; // The user being chatted with (ID)
+    var chat_receiver_id = "{{ request.user.id }}"; // The current logged-in user (ID)
+    var current_username = "{{ request.user.username }}"; // Current logged-in user's username
+    var chat_with_username = "{{ receiver.username }}"; // Username of the person being chatted with
 
     //For sending
     $(function () {
-        scrolltoend();
+        scrolltoend(); // Initial scroll to end of messages
         $('#chat-box').on('submit', function (event) {
             event.preventDefault();
-            var message = $('#id_message');
-            send('{{ request.user.username }}', '{{ receiver.username }}', message.val());
-            message.val('');
-        })
-    })
+            var message_input = $('#id_message');
+            // Call the global send function from chat.js
+            // It expects: send(current_user_username, other_user_username, message_text)
+            send(current_username, chat_with_username, message_input.val());
+            // message_input.val(''); // Clearing is now done inside send() on success
+        });
+
+        // Call receive function periodically if IDs are set (i.e., a chat is active)
+        if (typeof chat_sender_id !== 'undefined' && chat_sender_id && typeof chat_receiver_id !== 'undefined' && chat_receiver_id) {
+            setInterval(receive, 1000); // Poll every 1 second
+        }
+    });
 </script>
 {% endblock %}
