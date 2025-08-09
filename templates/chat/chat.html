@@ -66,7 +66,11 @@
             var message = $('#id_message');
             send('{{ request.user.username }}', '{{ receiver.username }}', message.val());
             message.val('');
-        })
+        });
+
+        if (sender_id) {
+            setInterval(receive, 2000);
+        }
     })
 </script>
 {% endblock %}
